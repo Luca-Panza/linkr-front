@@ -1,16 +1,30 @@
+import { useState } from "react"
 import styled from "styled-components"
+import UserImage from "./UserImage";
 
 export default function PostContainer(){
+    const [post, setPost] = useState({link:'', comment:''});
+    const [disabled, setDisabled] = useState(false);
+    function handleState(e){
+        setPost({...post, [e.target.name]: e.target.value})
+    }
+    function handlePostSend(){
+        // setDisabled(true);
+        alert("em construção");
+    }
+
     return (
         <PostContainerSC>
             <ImageContainer>
-                <img src="https://picsum.photos/200/300" alt="foto de perfil"/>
+                <UserImage link={"https://picsum.photos/200/300"} userId={1}/>
             </ImageContainer>
             <ContentContainer>
                 <TitleContainer>What are you going to share today?</TitleContainer>
-                <StyledInput placeholder="http://..." />
-                <StyledTextArea tall placeholder="Awesome article about #javascript" />
-                <button>publish</button>
+                <StyledInput placeholder="http://..." name="link" onChange={handleState} disabled={disabled}/>
+                <StyledTextArea placeholder="Awesome article about #javascript" name="comment" onChange={handleState} disabled={disabled}/>
+                <ButtonContainer>
+                    <button onClick={handlePostSend} disabled={disabled} >{disabled?'Publishing ...' : 'Publish'}</button>
+                </ButtonContainer>
             </ContentContainer>
         </PostContainerSC>
     )
@@ -21,27 +35,21 @@ const PostContainerSC = styled.div`
     height: 210px;
     border-radius: 15px;
     padding: 15px;
-    background-color: red;
+    background-color: #fff;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 20px;
 `
 
 const ImageContainer = styled.div`
     width: 50px;
-    img{
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    }
 `
 
 const ContentContainer = styled.div`
-    background-color: blue;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    font-family: 'lato';
 `
 
 const TitleContainer = styled.div`
@@ -62,8 +70,13 @@ const StyledInput = styled.input`
         font-size: 15px;
         font-weight: 300;
         line-height: 18px;
-        color: #999;
+        color: #949494;
         font-style: italic;
+    }
+    &:disabled {
+        background-color: #CCCCCC;
+        color: #666666;
+        cursor: not-allowed;
     }
 `
 
@@ -79,7 +92,39 @@ const StyledTextArea = styled.textarea`
         font-size: 15px;
         font-weight: 300;
         line-height: 18px;
-        color: #999;
+        color: #949494;
         font-style: italic;
     }
+    &:disabled {
+        background-color: #CCCCCC;
+        color: #666666;
+        cursor: not-allowed;
+    }
+`
+
+const ButtonContainer = styled.div`
+    width: 503px;
+    height: 31px;
+    display: flex;
+    justify-content: flex-end;
+    button{
+        width: 112px;
+        height: 31px;
+        background-color: #1877F2;
+        font-weight: 700;
+        font-size: 14px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        :hover{
+            cursor: pointer;
+        }
+        &:disabled {
+            background-color: #CCCCCC;
+            color: #666666;
+            cursor: not-allowed;
+        }
+    }
+
 `
