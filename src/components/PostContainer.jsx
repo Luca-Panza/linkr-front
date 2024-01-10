@@ -1,21 +1,22 @@
 import styled from "styled-components"
 
-export default function PostBox(){
+export default function PostContainer(){
     return (
-    <PostContainer>
-        <ImageContainer>
-            <img src="https://picsum.photos/200/300" alt="foto de perfil"/>
-        </ImageContainer>
-        <ContentContainer>
-            <TitleContainer>What are you going to share today?</TitleContainer>
-            <StyledInput placeholder="http://..." />
-            <StyledTextArea tall placeholder="Awesome article about #javascript" />
-            <button>publish</button>
-        </ContentContainer>
-    </PostContainer>)
+        <PostContainerSC>
+            <ImageContainer>
+                <img src="https://picsum.photos/200/300" alt="foto de perfil"/>
+            </ImageContainer>
+            <ContentContainer>
+                <TitleContainer>What are you going to share today?</TitleContainer>
+                <StyledInput placeholder="http://..." />
+                <StyledTextArea tall placeholder="Awesome article about #javascript" />
+                <button>publish</button>
+            </ContentContainer>
+        </PostContainerSC>
+    )
 }
 
-const PostContainer = styled.div`
+const PostContainerSC = styled.div`
     width: 610px;
     height: 210px;
     border-radius: 15px;

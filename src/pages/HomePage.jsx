@@ -1,9 +1,9 @@
-import PostBox from "../components/PostBox";
+import PostContainer from "../components/PostContainer";
 
 export default function HomePage(){
     return (
         <>
-            <PostBox/>
+            <PostContainer/>
         </>
     )
 }
