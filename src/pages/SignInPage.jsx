@@ -1,11 +1,10 @@
 import axios from "axios";
-import styled, { keyframes } from "styled-components";
-import 'animate.css';
-
+import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 
 import { UserContext } from '/src/contexts/UserContext';
+import SignInContainerLeftSC from "/src/components/SignInLeftContainer";
 
 export default function SignInPage() {
   const { setUser } = useContext(UserContext);
@@ -14,15 +13,23 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
 
   function handleSignIn() {
+		e.preventDefault();
 
+    axios.post(`${import.meta.env.VITE_API_URL}/sign-in`, {email, password})
+
+        .then((res) => {
+          setUser(res.data)
+          localStorage.removeItem("user");
+          localStorage.setItem("user", JSON.stringify(res.data));
+          navigate("/home")
+          }) 
   }
 
   return (
     <SignInContainer>
-      <SignInContainerLeft>
-        <h1>linkr</h1>
-        <h2>save, share and discover the best links on the web</h2>
-      </SignInContainerLeft>
+
+      <SignInContainerLeftSC/>
+
       <SignInContainerRight>
 
       <FormContainer onSubmit={handleSignIn}>
@@ -41,61 +48,19 @@ export default function SignInPage() {
           onChange={e => setPassword(e.target.value)}>
         </input>
         <button>Sign In</button>
+
+        <Link to={'/sign-up'}>First time? Create an account!</Link>
       </FormContainer>
 
-      <Link to={'/signUp'}>First time? Create an account!</Link>
       </SignInContainerRight>
     </SignInContainer>
   );
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
 const SignInContainer = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-`;
-
-const SignInContainerLeft = styled.div`
-  width: 60%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  user-select: none;
-
-  background-color:#151515;
-  color: #FFF;
-  h1{
-    animation: ${fadeIn} 1s ease-out;
-    margin-left: 15%;
-    font-family: Passion One;
-    font-size : min(14vh, 14vw);
-    letter-spacing: 5px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
-  h2{
-    animation: ${fadeIn} 1s ease-out;
-    width: 60%;
-    margin-left: 15%;
-    font-family: Oswald;
-    font-size : min(6vh, 6vw);
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
 `;
 
 const SignInContainerRight = styled.div`
@@ -108,29 +73,67 @@ const SignInContainerRight = styled.div`
   justify-content: center;
 `;
 
-
 const FormContainer = styled.form`
   width: 80%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 13px;
 
   input{
     width: 100%;
-    height: 65px;
+    height:8%;
     border: none; 
     border-radius: 6px;
+    border: 2px solid #151515;
     color: #9F9F9F;
 
     font-family: Oswald;
-    font-size: 27px;
+    font-size : min(4vh, 4vw);
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
   }
   button{
+    width: 100%;
+    height:8%;
+    border: none; 
+    border-radius: 6px;
+    border: 1px solid #d5d5d5;
+    transition-duration: 0.4s;
+    background: #151515;
+    color: #FFF;
 
+    font-family: Oswald;
+    font-size : min(4vh, 4vw);
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    &:hover {
+      background-color: #006BB2;
+      opacity: 0.9;
+      cursor: pointer;
+    }
+  }
+  a{
+    margin-top: 5%;
+    color: #FFF;
+
+    font-family: Lato;
+    font-size : min(3vh, 3vw);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    &:hover{
+      opacity: 0.7;
+    }
   }
 `;
